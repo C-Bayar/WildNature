@@ -3,7 +3,7 @@
 <h1>Contact Us</h1>
 <p>Have a question? Send us a message and we'll get back to you within 48 hours.</p>
 
-<form class="contact-form" id="contactForm" action="/contact" method="POST">
+<form class="contact-form" id="contactForm">
     <div class="form-group">
         <label for="name">Name *</label>
         <input type="text" id="name" name="name" required>
@@ -24,6 +24,16 @@
 
     <button type="submit" class="submit-btn">Send Message</button>
 </form>
+
+<div id="successMessage" style="display:none;">
+    <div class="success-card" style="margin-top:2rem;">
+        <div class="success-icon"></div>
+        <h2 style="color:#2e7d32;">Thank You!</h2>
+        <p>Your message has been sent to WildNature Park.</p>
+        <p>We'll reply within 48 hours.</p>
+        <a href="/" class="btn" style="margin-top:1rem;">Return Home</a>
+    </div>
+</div>
 
 <script src="/js/contact-validation.js"></script>
 

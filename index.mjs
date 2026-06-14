@@ -20,24 +20,20 @@ const db = new sqlite3.Database(join(__dirname, 'wildnature.db'));
 
 // ============ PAGE ROUTES ============
 
-// Home page
 app.get('/', (req, res) => {
     res.render('home', { pageTitle: 'WildNature Park' });
 });
 
-// Habitats listing page
 app.get('/habitats', (req, res) => {
     db.all('SELECT * FROM habitats', (err, habitats) => {
         if (err) {
             console.error('DB error on /habitats:', err);
-            res.status(500).send('Database error');
-        } else {
-            res.render('habitats', { habitats, pageTitle: 'Our Habitats' });
+            return res.status(500).send('Database error');
         }
+        res.render('habitats', { habitats, pageTitle: 'Our Habitats' });
     });
 });
 
-// Single habitat page with experiences
 app.get('/habitat/:id', (req, res) => {
     const habitatId = req.params.id;
     db.get('SELECT * FROM habitats WHERE id = ?', [habitatId], (err, habitat) => {
@@ -45,9 +41,7 @@ app.get('/habitat/:id', (req, res) => {
             console.error('DB error fetching habitat:', err);
             return res.status(500).send('Database error');
         }
-        if (!habitat) {
-            return res.status(404).send('Habitat not found');
-        }
+        if (!habitat) return res.status(404).send('Habitat not found');
         db.all('SELECT * FROM experiences WHERE habitat_id = ?', [habitatId], (err, experiences) => {
             if (err) {
                 console.error('DB error fetching experiences:', err);
@@ -58,7 +52,6 @@ app.get('/habitat/:id', (req, res) => {
     });
 });
 
-// Individual experience page
 app.get('/experience/:id', (req, res) => {
     const experienceId = req.params.id;
     db.get(`
@@ -71,14 +64,11 @@ app.get('/experience/:id', (req, res) => {
             console.error('DB error fetching experience:', err);
             return res.status(500).send('Database error');
         }
-        if (!experience) {
-            return res.status(404).send('Experience not found');
-        }
+        if (!experience) return res.status(404).send('Experience not found');
         res.render('experience', { experience, pageTitle: experience.name });
     });
 });
 
-// Activities page — database-driven
 app.get('/activities', (req, res) => {
     db.all('SELECT e.*, h.name as habitat_name FROM experiences e JOIN habitats h ON e.habitat_id = h.id ORDER BY h.id, e.id', (err, experiences) => {
         if (err) {
@@ -89,7 +79,6 @@ app.get('/activities', (req, res) => {
     });
 });
 
-// Events page — defaults to current year
 app.get('/events', (req, res) => {
     const currentYear = new Date().getFullYear().toString();
     const { year, category } = req.query;
@@ -117,7 +106,6 @@ app.get('/events', (req, res) => {
     });
 });
 
-// Single event page
 app.get('/event/:id', (req, res) => {
     const eventId = req.params.id;
     db.get(`
@@ -133,47 +121,25 @@ app.get('/event/:id', (req, res) => {
             console.error('DB error fetching event:', err);
             return res.status(500).send('Database error');
         }
-        if (!event) {
-            return res.status(404).send('Event not found');
-        }
+        if (!event) return res.status(404).send('Event not found');
         res.render('event', { event, pageTitle: event.title });
     });
 });
 
-// Memory Game page
 app.get('/game', (req, res) => {
     res.render('game', { pageTitle: 'Memory Game' });
 });
 
-// FAQ page
 app.get('/faq', (req, res) => {
     res.render('faq', { pageTitle: 'FAQ' });
 });
 
-// Contact page
 app.get('/contact', (req, res) => {
     res.render('contact', { pageTitle: 'Contact Us' });
 });
 
-// Contact form submission
-app.post('/contact', (req, res) => {
-    const { name, email, message } = req.body;
-    db.run(
-        'INSERT INTO contact_messages (name, email, message, submitted_at) VALUES (?, ?, ?, datetime("now"))',
-        [name, email, message],
-        (err) => {
-            if (err) {
-                console.error('DB error saving contact message:', err);
-                return res.status(500).send('Error saving message');
-            }
-            res.render('contact-success', { pageTitle: 'Message Sent', name });
-        }
-    );
-});
-
 // ============ AJAX ROUTES ============
 
-// AJAX Search endpoint
 app.get('/api/search', (req, res) => {
     const query = req.query.q || '';
     if (query.length < 2) return res.json([]);
@@ -196,7 +162,6 @@ app.get('/api/search', (req, res) => {
     );
 });
 
-// AJAX Events endpoint
 app.get('/api/events', (req, res) => {
     const { year, category } = req.query;
     let sql = `SELECT *, 
@@ -227,12 +192,29 @@ app.get('/api/events', (req, res) => {
     });
 });
 
+app.post('/api/contact', (req, res) => {
+    const { name, email, message } = req.body;
+    if (!name || !email || !message) {
+        return res.status(400).json({ success: false, error: 'Missing fields' });
+    }
+    db.run(
+        'INSERT INTO contact_messages (name, email, message, submitted_at) VALUES (?, ?, ?, datetime("now"))',
+        [name, email, message],
+        (err) => {
+            if (err) {
+                console.error('DB error saving contact message:', err);
+                return res.status(500).json({ success: false, error: 'Database error' });
+            }
+            res.json({ success: true });
+        }
+    );
+});
+
 // 404 handler
 app.use((req, res) => {
     res.status(404).render('404', { pageTitle: 'Page Not Found' });
 });
 
-// Start server
 app.listen(port, () => {
     console.log(`WildNature Park running at http://localhost:${port}`);
 });
