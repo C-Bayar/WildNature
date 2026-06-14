@@ -1,12 +1,28 @@
 <%- include('partials/header') %>
 
-<div class="success-container">
-    <div class="success-card">
-        <div class="success-icon">🦔</div>
-        <h1>404 – Page Not Found</h1>
-        <p>The page you're looking for has wandered off into the wilderness!</p>
-        <a href="/" class="btn">Return Home</a>
-        <a href="/habitats" class="btn" style="margin-left: 1rem; background: #555;">Explore Habitats</a>
+<div class="error-page">
+    <div class="error-content">
+        <div class="error-icon">&#128062;</div>
+        <div class="error-code">404</div>
+        <h1>Lost in the Wild</h1>
+        <p>The page you're looking for has wandered off into the wilderness and can't be found.</p>
+        <p style="color:#B8A898; margin-bottom:2rem;">
+            Don't worry — even the best explorers get lost sometimes.
+        </p>
+        <div class="error-actions">
+            <a href="/" class="btn">&#127968; Return Home</a>
+            <a href="/habitats" class="btn-outline">Explore Habitats</a>
+            <a href="/contact" class="btn-outline">Contact Us</a>
+        </div>
+        <div class="error-suggestions">
+            <p>You might be looking for:</p>
+            <ul>
+                <li><a href="/habitats">Our five wildlife habitats</a></li>
+                <li><a href="/activities">Adventure activities</a></li>
+                <li><a href="/events">Special events</a></li>
+                <li><a href="/faq">Frequently asked questions</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 

@@ -1,34 +1,19 @@
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    let isValid = true;
+    let valid = true;
 
     const name = document.getElementById('name');
     const email = document.getElementById('email');
     const message = document.getElementById('message');
 
-    if (name.value.trim() === '') {
-        document.getElementById('nameError').style.display = 'block';
-        isValid = false;
-    } else {
-        document.getElementById('nameError').style.display = 'none';
-    }
+    const show = (id) => document.getElementById(id).style.display = 'block';
+    const hide = (id) => document.getElementById(id).style.display = 'none';
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email.value)) {
-        document.getElementById('emailError').style.display = 'block';
-        isValid = false;
-    } else {
-        document.getElementById('emailError').style.display = 'none';
-    }
+    if (name.value.trim() === '') { show('nameError'); valid = false; } else hide('nameError');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { show('emailError'); valid = false; } else hide('emailError');
+    if (message.value.trim() === '') { show('messageError'); valid = false; } else hide('messageError');
 
-    if (message.value.trim() === '') {
-        document.getElementById('messageError').style.display = 'block';
-        isValid = false;
-    } else {
-        document.getElementById('messageError').style.display = 'none';
-    }
-
-    if (!isValid) return;
+    if (!valid) return;
 
     fetch('/api/contact', {
         method: 'POST',
@@ -39,8 +24,8 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             message: message.value.trim()
         })
     })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
+    .then(r => r.json())
+    .then(data => {
         if (data.success) {
             document.getElementById('contactForm').style.display = 'none';
             document.getElementById('successMessage').style.display = 'block';
@@ -48,8 +33,5 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             alert('Something went wrong. Please try again.');
         }
     })
-    .catch(function(err) {
-        console.error('Error:', err);
-        alert('Something went wrong. Please try again.');
-    });
+    .catch(() => alert('Something went wrong. Please try again.'));
 });

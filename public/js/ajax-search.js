@@ -3,38 +3,31 @@ const resultsDiv = document.getElementById('searchResults');
 
 if (searchInput) {
     let debounceTimer;
-    searchInput.addEventListener('input', function() {
+    searchInput.addEventListener('input', function () {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
             const query = this.value;
-            if (query.length < 2) {
-                resultsDiv.innerHTML = '';
-                return;
-            }
+            if (query.length < 2) { resultsDiv.innerHTML = ''; return; }
             fetch(`/api/search?q=${encodeURIComponent(query)}`)
-                .then(response => response.json())
+                .then(r => r.json())
                 .then(data => {
                     if (data.length === 0) {
-                        resultsDiv.innerHTML = '<p>No results found</p>';
+                        resultsDiv.innerHTML = '<p style="color:#B8A898; padding:0.5rem;">No results found.</p>';
                         return;
                     }
                     resultsDiv.innerHTML = data.map(item => {
-                        const linkUrl = item.type === 'habitat' ? `/habitat/${item.id}` : `/experience/${item.id}`;
-                        const icon = item.type === 'habitat' ? '🌿' : '🎪';
+                        const url = item.type === 'habitat' ? `/habitat/${item.id}` : `/experience/${item.id}`;
+                        const label = item.type === 'habitat' ? 'Habitat' : 'Experience';
                         return `
                             <div class="search-result-item">
-                                <strong>${icon} ${item.type === 'habitat' ? 'Habitat' : 'Experience'}</strong>
+                                <strong>${label}</strong>
                                 <h4>${escapeHtml(item.name)}</h4>
                                 <p>${item.description ? item.description.substring(0, 100) : ''}...</p>
-                                <a href="${linkUrl}">View →</a>
-                            </div>
-                        `;
+                                <a href="${url}">View &rarr;</a>
+                            </div>`;
                     }).join('');
                 })
-                .catch(error => {
-                    console.error('Search error:', error);
-                    resultsDiv.innerHTML = '<p>Error searching</p>';
-                });
+                .catch(() => { resultsDiv.innerHTML = '<p style="color:#B8A898;">Search error. Try again.</p>'; });
         }, 300);
     });
 }

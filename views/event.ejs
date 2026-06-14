@@ -1,32 +1,71 @@
 <%- include('partials/header') %>
 
+<a href="/events" class="back-link">&larr; All Events</a>
+
 <div class="event-detail">
-    <img src="<%= event.image_url || '/images/event_default.jpg' %>" alt="<%= event.title %>" onerror="this.src='https://placehold.co/800x400/2e7d32/white?text=Event'">
-    
+    <img src="<%= event.image_url || '/images/night_safari.jpg' %>" alt="<%= event.title %>"
+         onerror="this.src='https://placehold.co/1200x400/2A2A26/E8900A?text=Event'">
+
     <div class="event-content">
         <span class="status-badge status-<%= event.status %>">
-            <% if (event.status === 'upcoming') { %>Upcoming Event<% } %>
-            <% if (event.status === 'today') { %>Happening Today! <% } %>
-            <% if (event.status === 'past') { %>Past Event<% } %>
+            <% if (event.status === 'upcoming') { %>&#128338; Upcoming Event<% } %>
+            <% if (event.status === 'today') { %>&#11088; Happening Today!<% } %>
+            <% if (event.status === 'past') { %>&#10003; Past Event<% } %>
         </span>
-        
-        <h1><%= event.title %></h1>
-        
+
+        <div class="gold-rule"><h1><%= event.title %></h1></div>
+
         <div class="event-meta">
-            <p><strong> Date:</strong> <%= new Date(event.event_date).toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></p>
-            <p><strong> Category:</strong> <%= event.category %></p>
-            <p><strong> Time:</strong> 10:00 AM - 4:00 PM</p>
-            <p><strong> Location:</strong> WildNature Park</p>
+            <div class="event-meta-item">
+                <span class="meta-icon">&#128197;</span>
+                <div>
+                    <strong>Date</strong>
+                    <span><%= new Date(event.event_date).toLocaleDateString('en-GB', {
+                        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+                    }) %></span>
+                </div>
+            </div>
+            <div class="event-meta-item">
+                <span class="meta-icon">&#128204;</span>
+                <div>
+                    <strong>Category</strong>
+                    <span><%= event.category %></span>
+                </div>
+            </div>
+            <div class="event-meta-item">
+                <span class="meta-icon">&#128337;</span>
+                <div>
+                    <strong>Time</strong>
+                    <span>10:00 AM – 4:00 PM</span>
+                </div>
+            </div>
+            <div class="event-meta-item">
+                <span class="meta-icon">&#128205;</span>
+                <div>
+                    <strong>Location</strong>
+                    <span>Wild Nature Park</span>
+                </div>
+            </div>
         </div>
-        
-        <h2>About This Event</h2>
-        <p style="font-size: 1.1rem; line-height: 1.6;"><%= event.description %></p>
-        
-        <% if (event.status === 'upcoming') { %>
-            <a href="/contact" class="btn" style="display: inline-block; margin-top: 1rem;">Book Your Place →</a>
+
+        <div class="event-description">
+            <h2>About This Event</h2>
+            <p><%= event.description %></p>
+        </div>
+
+        <% if (event.status === 'past') { %>
+            <div class="past-event-notice">
+                <span>&#9888;</span> This event has already taken place. Check our
+                <a href="/events">upcoming events</a> for what's next.
+            </div>
         <% } %>
-        
-        <a href="/events" class="btn" style="display: inline-block; margin-top: 1rem; margin-left: 1rem; background: #666;">← Back to Events</a>
+
+        <div class="event-actions">
+            <% if (event.status === 'upcoming') { %>
+                <a href="/contact" class="btn">Enquire About This Event &rarr;</a>
+            <% } %>
+            <a href="/events" class="btn-outline">&larr; Back to Events</a>
+        </div>
     </div>
 </div>
 

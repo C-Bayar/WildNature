@@ -1,6 +1,6 @@
 <%- include('partials/header') %>
 
-<a href="/habitat/<%= experience.habitat_id %>" class="btn" style="display: inline-block; margin-bottom: 1rem;">← Back to <%= experience.habitat_name %></a>
+<a href="/habitat/<%= experience.habitat_id %>" class="back-link">&larr; Back to <%= experience.habitat_name %></a>
 
 <div class="experience-detail">
     <% if (experience.image_url) { %>
@@ -8,16 +8,64 @@
             <img src="<%= experience.image_url %>" alt="<%= experience.name %>" class="experience-detail-img">
         </div>
     <% } %>
-    
-    <h1><%= experience.name %></h1>
-    <p class="experience-description"><%= experience.description %></p>
-    
-    <div class="info-box">
-        <p><strong>Located in:</strong> <%= experience.habitat_name %></p>
-        <p><strong>Available:</strong> Daily, 9am - 6pm</p>
-        <p><strong>Rating:</strong> (4.5/5)</p>
-        <p><strong>Duration:</strong> 30-45 minutes</p>
-        <p><strong> Suitable for:</strong> All ages</p>
+
+    <div class="experience-detail-body">
+        <div class="experience-tag"><%= experience.habitat_name %></div>
+        <h1><%= experience.name %></h1>
+        <p class="experience-description"><%= experience.description %></p>
+
+        <div class="info-box">
+            <h3>Experience Details</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-icon">&#127807;</span>
+                    <div>
+                        <strong>Habitat</strong>
+                        <span><%= experience.habitat_name %></span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">&#128337;</span>
+                    <div>
+                        <strong>Duration</strong>
+                        <span>30–45 minutes</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">&#128197;</span>
+                    <div>
+                        <strong>Available</strong>
+                        <span>Daily, 9am – 6pm</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">&#9733;</span>
+                    <div>
+                        <strong>Rating</strong>
+                        <span>4.5 / 5.0</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">&#128100;</span>
+                    <div>
+                        <strong>Suitable For</strong>
+                        <span>All ages</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">&#9855;</span>
+                    <div>
+                        <strong>Accessibility</strong>
+                        <span>Fully accessible</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="experience-cta">
+            <a href="/activities" class="btn">See All Activities</a>
+            <a href="/contact" class="btn-outline">Ask a Question</a>
+        </div>
     </div>
 </div>
 

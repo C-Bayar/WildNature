@@ -1,14 +1,35 @@
 <%- include('partials/header') %>
 
-<a href="/habitats" class="btn" style="display: inline-block; margin-bottom: 1rem;">← Back to Habitats</a>
+<a href="/habitats" class="back-link">&larr; All Habitats</a>
 
-<h1><%= habitat.name %></h1>
+<div class="gold-rule"><h1><%= habitat.name %></h1></div>
 
-<img src="<%= habitat.image_url %>" alt="<%= habitat.name %>" class="habitat-banner" onerror="this.src='https://placehold.co/800x300/2e7d32/white?text=' + encodeURIComponent('<%= habitat.name %>')">
+<img src="<%= habitat.image_url %>" alt="<%= habitat.name %>" class="habitat-banner"
+     onerror="this.src='https://placehold.co/1200x340/2A2A26/E8900A?text=<%= encodeURIComponent(habitat.name) %>'">
 
-<p class="habitat-description"><%= habitat.description %></p>
+<div class="habitat-intro">
+    <p class="habitat-description"><%= habitat.description %></p>
+    <div class="habitat-meta-strip">
+        <div class="habitat-meta-item">
+            <span class="meta-icon">&#128337;</span>
+            <span>Open 9am – 6pm Daily</span>
+        </div>
+        <div class="habitat-meta-item">
+            <span class="meta-icon">&#127774;</span>
+            <span>All Weather Access</span>
+        </div>
+        <div class="habitat-meta-item">
+            <span class="meta-icon">&#128100;</span>
+            <span>Suitable for All Ages</span>
+        </div>
+        <div class="habitat-meta-item">
+            <span class="meta-icon">&#9855;</span>
+            <span>Wheelchair Accessible</span>
+        </div>
+    </div>
+</div>
 
-<h2>Experiences & Exhibits</h2>
+<div class="gold-rule"><h2>Experiences &amp; Exhibits</h2></div>
 
 <div class="experience-grid">
     <% if (experiences && experiences.length > 0) { %>
@@ -22,12 +43,12 @@
                 <div class="experience-card-content">
                     <h3><%= exp.name %></h3>
                     <p><%= exp.description %></p>
-                    <a href="/experience/<%= exp.id %>" class="btn-experience">Learn More →</a>
+                    <a href="/experience/<%= exp.id %>" class="btn-experience">Learn More &rarr;</a>
                 </div>
             </div>
         <% }); %>
     <% } else { %>
-        <p>No experiences found for this habitat.</p>
+        <p style="color:#B8A898;">No experiences found for this habitat yet.</p>
     <% } %>
 </div>
 

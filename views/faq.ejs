@@ -1,37 +1,142 @@
 <%- include('partials/header') %>
 
-<h1>Frequently Asked Questions</h1>
-
-<div class="faq-item">
-    <div class="faq-question">What are your opening times?</div>
-    <div class="faq-answer">We are open every day from 9am to 6pm. Last entry is at 5pm.</div>
+<div class="page-hero">
+    <div class="page-hero-text">
+        <span class="hero-eyebrow">Need Help?</span>
+        <h1>Frequently Asked Questions</h1>
+        <p>Everything you need to know before your visit to Wild Nature Park. Can't find your answer? <a href="/contact" style="color:#E8900A;">Contact us</a>.</p>
+    </div>
 </div>
 
-<div class="faq-item">
-    <div class="faq-question"> How much do tickets cost?</div>
-    <div class="faq-answer">This is a promotional website only. </div>
+<div class="faq-list">
+
+    <div class="faq-category-title">Planning Your Visit</div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            What are your opening times?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Wild Nature Park is open <strong>every day of the year</strong> from <strong>9:00 AM to 6:00 PM</strong>.
+            Last entry is at <strong>5:00 PM</strong>. This includes Bank Holidays, weekends and school holidays.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Is there parking available?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Yes — we have a large free car park directly on site, with accessible spaces located close to the main entrance.
+            We also have dedicated coach parking and a drop-off zone.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Is the park wheelchair accessible?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Absolutely. All habitats, experience areas, pathways, cafés and facilities are fully wheelchair accessible.
+            Mobility scooters and wheelchairs are available to hire at the main entrance.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Can I bring my dog?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Only registered assistance dogs are permitted inside the park. This is to ensure the safety and
+            wellbeing of our wildlife residents.
+        </div>
+    </div>
+
+    <div class="faq-category-title">Food &amp; Facilities</div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Is there food available in the park?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Yes! We have two dining options — <strong>The Canopy Café</strong> (light lunches, snacks, hot drinks)
+            and the <strong>Savannah Grill</strong> (hot meals, burgers, vegetarian options). Both are open throughout
+            the day. Picnic areas are also available across the park.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Are there baby changing facilities?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Yes, baby changing rooms are available in all toilet blocks across the park. We also have a
+            family rest room near the main entrance with feeding facilities.
+        </div>
+    </div>
+
+    <div class="faq-category-title">Wildlife &amp; Experiences</div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Can I take photos with the animals?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            Photography is welcomed and encouraged throughout the entire park. Several close-encounter experiences
+            such as Giraffe Encounter and Tropical Bird Feeding offer exceptional photo opportunities with our rangers.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            How long does it take to see the whole park?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            We recommend allowing a <strong>full day</strong> to experience everything. Most visitors spend 5–7 hours
+            exploring the five habitats and attending experiences. You could easily return for more!
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">
+            Are the animal encounters safe?
+            <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+            All experiences are supervised by our expert keepers and rangers. The safety of both our guests and animals
+            is our absolute top priority. Full briefings are given before every encounter activity.
+        </div>
+    </div>
+
 </div>
 
-<div class="faq-item">
-    <div class="faq-question">Can I bring my dog?</div>
-    <div class="faq-answer">Only assistance dogs are permitted inside the park.</div>
-</div>
-
-<div class="faq-item">
-    <div class="faq-question">Is there food available?</div>
-    <div class="faq-answer">Yes! We have The Canopy Cafe and Savannah Grill serving hot and cold food.</div>
-</div>
-
-<div class="faq-item">
-    <div class="faq-question"> Is the park wheelchair accessible?</div>
-    <div class="faq-answer">Yes, all habitats and facilities are fully wheelchair accessible.</div>
+<div class="faq-cta">
+    <p>Still have a question?</p>
+    <a href="/contact" class="btn">Contact Our Team &rarr;</a>
 </div>
 
 <script>
     document.querySelectorAll('.faq-question').forEach(q => {
         q.addEventListener('click', () => {
-            const a = q.nextElementSibling;
-            a.classList.toggle('active');
+            const item = q.parentElement;
+            const answer = q.nextElementSibling;
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('open');
+                i.querySelector('.faq-answer').classList.remove('active');
+            });
+            if (!isOpen) {
+                item.classList.add('open');
+                answer.classList.add('active');
+            }
         });
     });
 </script>

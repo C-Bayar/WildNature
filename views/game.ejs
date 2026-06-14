@@ -1,14 +1,68 @@
 <%- include('partials/header') %>
 
-<h1>Wildlife Memory Match Game </h1>
-<p>Test your memory by matching the amazing animals! Great for young explorers.</p>
+<div class="page-hero">
+    <div class="page-hero-text">
+        <span class="hero-eyebrow">Fun for All Ages</span>
+        <h1>Wildlife Memory Match</h1>
+        <p>Flip the cards and match the animals! Can you find all four pairs?
+           A perfect challenge for young explorers and wildlife fans alike.</p>
+    </div>
+</div>
 
-<div class="game-container">
-    <div class="game-grid" id="gameGrid"></div>
-    <p>Moves: <span id="moves">0</span></p>
-    <button id="resetBtn" class="btn">New Game</button>
+<div class="game-wrapper">
+    <div class="game-how-to">
+        <div class="how-to-item">
+            <span class="how-icon">&#128072;</span>
+            <span>Click a card to flip it</span>
+        </div>
+        <div class="how-to-item">
+            <span class="how-icon">&#128064;</span>
+            <span>Find the matching pair</span>
+        </div>
+        <div class="how-to-item">
+            <span class="how-icon">&#127942;</span>
+            <span>Match all 4 to win!</span>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="game-stats">
+            <span>Moves: <strong id="moves">0</strong></span>
+            <span>Pairs Found: <strong id="pairs">0</strong> / 4</span>
+        </div>
+
+        <div class="game-grid" id="gameGrid"></div>
+
+        <div class="game-controls">
+            <button id="resetBtn" class="btn">&#8635; New Game</button>
+        </div>
+    </div>
+
+    <div class="game-animals-info">
+        <div class="gold-rule"><h2>Meet the Animals</h2></div>
+        <div class="animals-strip">
+            <div class="animal-chip">
+                <img src="/images/bear.jpg" alt="Bear">
+                <span>Bear</span>
+            </div>
+            <div class="animal-chip">
+                <img src="/images/crocodile.jpg" alt="Crocodile">
+                <span>Crocodile</span>
+            </div>
+            <div class="animal-chip">
+                <img src="/images/eagle.jpg" alt="Eagle">
+                <span>Eagle</span>
+            </div>
+            <div class="animal-chip">
+                <img src="/images/elephant.jpg" alt="Elephant">
+                <span>Elephant</span>
+            </div>
+        </div>
+        <p style="text-align:center; color:#B8A898; margin-top:1rem;">
+            You can meet many of these animals in person across our <a href="/habitats" style="color:#E8900A;">five habitats</a>!
+        </p>
+    </div>
 </div>
 
 <script src="/js/game.js"></script>
-
 <%- include('partials/footer') %>

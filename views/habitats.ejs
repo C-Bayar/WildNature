@@ -1,15 +1,26 @@
 <%- include('partials/header') %>
 
-<h1>Our Habitats</h1>
-<p>Explore our five unique wildlife zones, each carefully designed to immerse you in different ecosystems.</p>
+<div class="page-hero">
+    <div class="page-hero-text">
+        <span class="hero-eyebrow">Explore the Park</span>
+        <h1>Our Five Habitats</h1>
+        <p>Each habitat is a fully immersive ecosystem — designed to transport you to some of the world's most extraordinary wild places. From steaming rainforests to frozen tundra, every zone tells a different story.</p>
+    </div>
+</div>
 
 <div class="habitat-grid">
     <% habitats.forEach(habitat => { %>
         <div class="habitat-card">
-            <img src="<%= habitat.image_url %>" alt="<%= habitat.name %>">
-            <h2><%= habitat.name %></h2>
-            <p><%= habitat.description %></p>
-            <a href="/habitat/<%= habitat.id %>" class="btn">View Experiences →</a>
+            <div class="habitat-card-img-wrap">
+                <img src="<%= habitat.image_url %>" alt="<%= habitat.name %>"
+                     onerror="this.src='https://placehold.co/400x200/2A2A26/E8900A?text=<%= encodeURIComponent(habitat.name) %>'">
+                <div class="habitat-card-overlay"><span>Explore</span></div>
+            </div>
+            <div class="habitat-card-body">
+                <h3><%= habitat.name %></h3>
+                <p><%= habitat.description %></p>
+                <a href="/habitat/<%= habitat.id %>" class="btn">View Experiences &rarr;</a>
+            </div>
         </div>
     <% }); %>
 </div>

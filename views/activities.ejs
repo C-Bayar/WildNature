@@ -1,11 +1,16 @@
 <%- include('partials/header') %>
 
 <div class="activity-hero">
-    <h1>Adventure Activities</h1>
-    <p>Ready for an adrenaline rush? Explore our thrilling wildlife experiences across all habitats!</p>
+    <div class="activity-hero-bg"></div>
+    <div class="activity-hero-content">
+        <span class="hero-eyebrow">Get Involved</span>
+        <h1>Adventure Activities</h1>
+        <p>From treetop walks to night safaris — there's something to thrill every explorer</p>
+    </div>
 </div>
 
 <div class="filter-section">
+    <span class="filter-label">Filter by Habitat:</span>
     <button class="filter-btn active" data-filter="all">All Habitats</button>
     <% const habitatNames = [...new Set(experiences.map(e => e.habitat_name))]; %>
     <% habitatNames.forEach(name => { %>
@@ -15,16 +20,19 @@
 
 <div class="activity-grid" id="activityGrid">
     <% experiences.forEach(exp => { %>
-        <div class="activity-card" data-difficulty="<%= exp.habitat_name %>">
-            <img src="<%= exp.image_url %>" alt="<%= exp.name %>" onerror="this.src='https://placehold.co/400x220/2e7d32/white?text=<%= encodeURIComponent(exp.name) %>'">
+        <div class="activity-card" data-habitat="<%= exp.habitat_name %>">
+            <div class="activity-img-wrap">
+                <img src="<%= exp.image_url %>" alt="<%= exp.name %>"
+                     onerror="this.src='https://placehold.co/400x220/2A2A26/E8900A?text=<%= encodeURIComponent(exp.name) %>'">
+            </div>
             <div class="activity-info">
-                <h2><%= exp.name %></h2>
                 <div class="activity-meta">
-                    <span class="badge-easy"><%= exp.habitat_name %></span>
-                    <span>🌿 Wildlife Experience</span>
+                    <span class="habitat-tag"><%= exp.habitat_name %></span>
+                    <span>&#128337; 30–45 mins</span>
                 </div>
+                <h2><%= exp.name %></h2>
                 <p><%= exp.description %></p>
-                <a href="/experience/<%= exp.id %>" class="book-btn">Find Out More →</a>
+                <a href="/experience/<%= exp.id %>" class="book-btn">Find Out More &rarr;</a>
             </div>
         </div>
     <% }); %>
@@ -37,11 +45,7 @@
             btn.classList.add('active');
             const filter = btn.dataset.filter;
             document.querySelectorAll('.activity-card').forEach(card => {
-                if (filter === 'all' || card.dataset.difficulty === filter) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = (filter === 'all' || card.dataset.habitat === filter) ? 'block' : 'none';
             });
         });
     });

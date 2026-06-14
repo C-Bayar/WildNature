@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= pageTitle || 'WildNature Park' %></title>
+    <title><%= pageTitle ? pageTitle + ' — Wild Nature Park' : 'Wild Nature Park' %></title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <header>
         <div class="opening-banner">
-            OPEN DAILY: 9am – 6pm | Last entry 5pm
+            &#9679; OPEN EVERY DAY &nbsp;|&nbsp; 9:00 AM – 6:00 PM &nbsp;|&nbsp; LAST ENTRY 5:00 PM &#9679;
         </div>
         <div class="header-container">
-            <div class="logo">
-                <img src="/images/logo_wildnature.jpg" alt="WildNature Park Logo" class="logo-img" onerror="this.src='https://placehold.co/60x60/2e7d32/white?text=WN'">
-                <div>
-                    <h1> WildNature Park</h1>
-                    <p>Where Adventure Meets Conservation</p>
+            <a href="/" class="logo">
+                <img src="/images/logo_wildnature.jpg" alt="Wild Nature Park Logo" class="logo-img"
+                     onerror="this.src='https://placehold.co/52x52/E8900A/1A1A18?text=WN'">
+                <div class="logo-text">
+                    <h1>Wild Nature</h1>
+                    <p>Eco-Adventure Wildlife Park</p>
                 </div>
-            </div>
-            <nav>
+            </a>
+            <nav aria-label="Main navigation">
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/habitats">Habitats</a></li>

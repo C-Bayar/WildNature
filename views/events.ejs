@@ -1,119 +1,115 @@
 <%- include('partials/header') %>
 
 <div class="events-hero">
-    <h1>Special Events & Festivals</h1>
-    <p>Join us for unforgettable wildlife experiences throughout the year!</p>
+    <div class="events-hero-bg"></div>
+    <div class="events-hero-content">
+        <span class="hero-eyebrow">What's On</span>
+        <h1>Special Events &amp; Festivals</h1>
+        <p>Join us throughout the year for wildlife festivals, conservation talks, night safaris and more</p>
+    </div>
 </div>
 
 <div class="filter-section">
-    <label>Filter by Year:</label>
+    <span class="filter-label">Filter Events:</span>
+    <label for="yearFilter">Year</label>
     <select id="yearFilter">
         <option value="all">All Years</option>
         <% years.forEach(year => { %>
             <option value="<%= year %>" <%= selectedYear === year ? 'selected' : '' %>><%= year %></option>
         <% }); %>
     </select>
-
-    <label>Filter by Category:</label>
+    <label for="categoryFilter">Category</label>
     <select id="categoryFilter">
         <option value="all">All Categories</option>
         <% categories.forEach(cat => { %>
             <option value="<%= cat %>" <%= selectedCategory === cat ? 'selected' : '' %>><%= cat %></option>
         <% }); %>
     </select>
-
-    <button id="applyFilters" class="filter-btn">Apply Filters</button>
+    <button id="applyFilters" class="filter-btn">Apply</button>
     <button id="resetFilters" class="filter-btn">Reset</button>
 </div>
 
 <div id="eventsContainer">
-    <div class="loading" style="text-align: center; padding: 2rem;">Loading events...</div>
+    <p class="loading-text">&#9685; Loading events...</p>
 </div>
 
 <script>
-    function loadEvents() {
-        const year = document.getElementById('yearFilter').value;
-        const category = document.getElementById('categoryFilter').value;
-
-        document.getElementById('eventsContainer').innerHTML = '<div class="loading" style="text-align: center; padding: 2rem;">Loading events...</div>';
-
-        fetch(`/api/events?year=${year}&category=${category}`)
-            .then(response => response.json())
-            .then(events => {
-                const container = document.getElementById('eventsContainer');
-
-                if (events.length === 0) {
-                    container.innerHTML = `
-                        <div class="no-events">
-                            <h3>No events found</h3>
-                            <p>Try changing your filters or check back later!</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                let eventsHtml = '<div class="events-grid">';
-                events.forEach(event => {
-                    let statusText = '';
-                    let statusClass = '';
-                    if (event.status === 'upcoming') {
-                        statusText = '🔜 Upcoming';
-                        statusClass = 'status-upcoming';
-                    } else if (event.status === 'today') {
-                        statusText = '⭐ Today!';
-                        statusClass = 'status-today';
-                    } else {
-                        statusText = 'Past Event';
-                        statusClass = 'status-past';
-                    }
-
-                    const eventDate = new Date(event.event_date).toLocaleDateString('en-GB');
-                    const imageUrl = event.image_url || '/images/event_default.jpg';
-                    const description = event.description.substring(0, 100);
-
-                    eventsHtml += `
-                        <div class="event-card">
-                            <img src="${imageUrl}" alt="${escapeHtml(event.title)}" onerror="this.src='https://placehold.co/400x200/2e7d32/white?text=Event'">
-                            <div class="event-info">
-                                <span class="event-category">📌 ${escapeHtml(event.category)}</span>
-                                <span class="event-status ${statusClass}">${statusText}</span>
-                                <h3>${escapeHtml(event.title)}</h3>
-                                <div class="event-date">📅 ${eventDate}</div>
-                                <p>${escapeHtml(description)}...</p>
-                                <a href="/event/${event.id}" class="btn-small">Learn More →</a>
-                            </div>
-                        </div>
-                    `;
-                });
-                eventsHtml += '</div>';
-                container.innerHTML = eventsHtml;
-            })
-            .catch(error => {
-                console.error('Error loading events:', error);
-                document.getElementById('eventsContainer').innerHTML = `
-                    <div class="no-events">
-                        <h3>Error loading events</h3>
-                        <p>Please try again later.</p>
-                    </div>
-                `;
-            });
-    }
-
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 
-    document.getElementById('applyFilters').addEventListener('click', loadEvents);
+    function loadEvents() {
+        const year = document.getElementById('yearFilter').value;
+        const category = document.getElementById('categoryFilter').value;
+        document.getElementById('eventsContainer').innerHTML = '<p class="loading-text">&#9685; Loading events...</p>';
 
+        fetch(`/api/events?year=${year}&category=${category}`)
+            .then(r => r.json())
+            .then(events => {
+                const container = document.getElementById('eventsContainer');
+                if (events.length === 0) {
+                    container.innerHTML = `
+                        <div class="no-events">
+                            <div style="font-size:3rem; margin-bottom:1rem;">&#128269;</div>
+                            <h3>No Events Found</h3>
+                            <p>Try adjusting your filters or check back soon for new events.</p>
+                        </div>`;
+                    return;
+                }
+
+                let html = '<div class="events-grid">';
+                events.forEach(event => {
+                    const statusMap = {
+                        upcoming: ['status-upcoming', 'Upcoming'],
+                        today:    ['status-today',    'Happening Today!'],
+                        past:     ['status-past',     'Past Event']
+                    };
+                    const [cls, label] = statusMap[event.status] || ['status-past', 'Past Event'];
+                    const date = new Date(event.event_date).toLocaleDateString('en-GB', {
+                        day: 'numeric', month: 'long', year: 'numeric'
+                    });
+                    const img = event.image_url || '/images/night_safari.jpg';
+                    const desc = event.description.length > 120
+                        ? event.description.substring(0, 120) + '...'
+                        : event.description;
+
+                    html += `
+                        <div class="event-card">
+                            <img src="${img}" alt="${escapeHtml(event.title)}"
+                                 onerror="this.src='https://placehold.co/400x200/2A2A26/E8900A?text=Event'">
+                            <div class="event-info">
+                                <div class="event-meta-row">
+                                    <span class="event-category">${escapeHtml(event.category)}</span>
+                                    <span class="event-status ${cls}">${label}</span>
+                                </div>
+                                <h3>${escapeHtml(event.title)}</h3>
+                                <div class="event-date">&#128197; ${date}</div>
+                                <p>${escapeHtml(desc)}</p>
+                                <a href="/event/${event.id}" class="btn-small">Learn More &rarr;</a>
+                            </div>
+                        </div>`;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            })
+            .catch(() => {
+                document.getElementById('eventsContainer').innerHTML = `
+                    <div class="no-events">
+                        <h3>Error Loading Events</h3>
+                        <p>Please try again later.</p>
+                    </div>`;
+            });
+    }
+
+    document.getElementById('applyFilters').addEventListener('click', loadEvents);
     document.getElementById('resetFilters').addEventListener('click', () => {
         document.getElementById('yearFilter').value = '<%= new Date().getFullYear() %>';
         document.getElementById('categoryFilter').value = 'all';
         loadEvents();
     });
 
-    // On page load, fire AJAX using the server-pre-selected year (current year)
     loadEvents();
 </script>
 
