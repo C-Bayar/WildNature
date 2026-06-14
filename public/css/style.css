@@ -105,7 +105,7 @@ nav a:hover { color: #f6bd67; border-bottom-color: #E8900A; }
 
 /* FOOTER */
 footer {
-    background: #5f4320;
+    background: #4A2E10;
     border-top: 3px solid #E8900A;
     padding: 3rem 2rem 2rem;
     margin-top: 5rem;
@@ -149,7 +149,7 @@ footer {
 }
 .footer-col ul li a:hover { color: #E8900A; }
 .footer-bottom { text-align: center; }
-.footer-bottom p { color: #6B5744; font-size: 0.82rem; margin: 0.3rem 0; }
+.footer-bottom p { color: #D4C4A8; }
 
 /* MAIN */
 main {
