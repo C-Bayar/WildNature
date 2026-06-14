@@ -101,11 +101,11 @@ nav a {
     border-bottom: 2px solid transparent;
     transition: all 0.3s;
 }
-nav a:hover { color: #E8900A; border-bottom-color: #E8900A; }
+nav a:hover { color: #f6bd67; border-bottom-color: #E8900A; }
 
 /* FOOTER */
 footer {
-    background: #2C1F0E;
+    background: #5f4320;
     border-top: 3px solid #E8900A;
     padding: 3rem 2rem 2rem;
     margin-top: 5rem;
@@ -118,13 +118,13 @@ footer {
     justify-content: space-between;
     flex-wrap: wrap;
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(212,196,168,0.2);
+    border-bottom: 1px solid rgba(171, 158, 135, 0.2);
     margin-bottom: 1.5rem;
 }
 .footer-logo {
     font-family: Georgia, serif;
     font-size: 1.4rem;
-    color: #E8900A;
+    color: #d38611;
     letter-spacing: 2px;
     margin-bottom: 0.5rem;
 }
