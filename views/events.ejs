@@ -1,0 +1,120 @@
+<%- include('partials/header') %>
+
+<div class="events-hero">
+    <h1>Special Events & Festivals</h1>
+    <p>Join us for unforgettable wildlife experiences throughout the year!</p>
+</div>
+
+<div class="filter-section">
+    <label>Filter by Year:</label>
+    <select id="yearFilter">
+        <option value="all">All Years</option>
+        <% years.forEach(year => { %>
+            <option value="<%= year %>" <%= selectedYear === year ? 'selected' : '' %>><%= year %></option>
+        <% }); %>
+    </select>
+
+    <label>Filter by Category:</label>
+    <select id="categoryFilter">
+        <option value="all">All Categories</option>
+        <% categories.forEach(cat => { %>
+            <option value="<%= cat %>" <%= selectedCategory === cat ? 'selected' : '' %>><%= cat %></option>
+        <% }); %>
+    </select>
+
+    <button id="applyFilters" class="filter-btn">Apply Filters</button>
+    <button id="resetFilters" class="filter-btn">Reset</button>
+</div>
+
+<div id="eventsContainer">
+    <div class="loading" style="text-align: center; padding: 2rem;">Loading events...</div>
+</div>
+
+<script>
+    function loadEvents() {
+        const year = document.getElementById('yearFilter').value;
+        const category = document.getElementById('categoryFilter').value;
+
+        document.getElementById('eventsContainer').innerHTML = '<div class="loading" style="text-align: center; padding: 2rem;">Loading events...</div>';
+
+        fetch(`/api/events?year=${year}&category=${category}`)
+            .then(response => response.json())
+            .then(events => {
+                const container = document.getElementById('eventsContainer');
+
+                if (events.length === 0) {
+                    container.innerHTML = `
+                        <div class="no-events">
+                            <h3>No events found</h3>
+                            <p>Try changing your filters or check back later!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let eventsHtml = '<div class="events-grid">';
+                events.forEach(event => {
+                    let statusText = '';
+                    let statusClass = '';
+                    if (event.status === 'upcoming') {
+                        statusText = '🔜 Upcoming';
+                        statusClass = 'status-upcoming';
+                    } else if (event.status === 'today') {
+                        statusText = '⭐ Today!';
+                        statusClass = 'status-today';
+                    } else {
+                        statusText = 'Past Event';
+                        statusClass = 'status-past';
+                    }
+
+                    const eventDate = new Date(event.event_date).toLocaleDateString('en-GB');
+                    const imageUrl = event.image_url || '/images/event_default.jpg';
+                    const description = event.description.substring(0, 100);
+
+                    eventsHtml += `
+                        <div class="event-card">
+                            <img src="${imageUrl}" alt="${escapeHtml(event.title)}" onerror="this.src='https://placehold.co/400x200/2e7d32/white?text=Event'">
+                            <div class="event-info">
+                                <span class="event-category">📌 ${escapeHtml(event.category)}</span>
+                                <span class="event-status ${statusClass}">${statusText}</span>
+                                <h3>${escapeHtml(event.title)}</h3>
+                                <div class="event-date">📅 ${eventDate}</div>
+                                <p>${escapeHtml(description)}...</p>
+                                <a href="/event/${event.id}" class="btn-small">Learn More →</a>
+                            </div>
+                        </div>
+                    `;
+                });
+                eventsHtml += '</div>';
+                container.innerHTML = eventsHtml;
+            })
+            .catch(error => {
+                console.error('Error loading events:', error);
+                document.getElementById('eventsContainer').innerHTML = `
+                    <div class="no-events">
+                        <h3>Error loading events</h3>
+                        <p>Please try again later.</p>
+                    </div>
+                `;
+            });
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    document.getElementById('applyFilters').addEventListener('click', loadEvents);
+
+    document.getElementById('resetFilters').addEventListener('click', () => {
+        document.getElementById('yearFilter').value = '<%= new Date().getFullYear() %>';
+        document.getElementById('categoryFilter').value = 'all';
+        loadEvents();
+    });
+
+    // On page load, fire AJAX using the server-pre-selected year (current year)
+    loadEvents();
+</script>
+
+<%- include('partials/footer') %>

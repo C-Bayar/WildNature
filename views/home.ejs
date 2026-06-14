@@ -1,0 +1,65 @@
+<%- include('partials/header') %>
+
+<div class="hero">
+    <h1>Welcome to WildNature Park</h1>
+    <p>Experience the world's most incredible wildlife habitats, right here in the UK.</p>
+</div>
+
+<div class="opening-times-banner">
+    <div class="opening-times-inner">
+        <span class="opening-icon">🕘</span>
+        <div>
+            <strong>Open Every Day</strong>
+            <span>9:00 AM – 6:00 PM</span>
+            <span class="opening-note">Last entry 5:00 PM</span>
+        </div>
+    </div>
+</div>
+
+<div class="search-section">
+    <h2>Find Your Adventure</h2>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search habitats or wildlife experiences...">
+    </div>
+    <div id="searchResults"></div>
+</div>
+
+<section>
+    <h2 class="section-title">Explore Our Habitats</h2>
+    <div class="habitat-grid">
+        <div class="habitat-card">
+            <img src="/images/rainforest_retreat.jpg" alt="Rainforest Retreat">
+            <h3>Rainforest Retreat</h3>
+            <p>Immerse yourself in a lush, vibrant world of exotic birds and colourful frogs.</p>
+            <a href="/habitat/1" class="btn">Discover →</a>
+        </div>
+        <div class="habitat-card">
+            <img src="/images/habitat_savannah.jpg" alt="Savannah Plains">
+            <h3>Savannah Plains</h3>
+            <p>Spot majestic lions, giraffes, and zebras roaming freely across the plains.</p>
+            <a href="/habitat/2" class="btn">Discover →</a>
+        </div>
+        <div class="habitat-card">
+            <img src="/images/arctic_discovery_zone.jpg" alt="Arctic Discovery Zone">
+            <h3>Arctic Discovery Zone</h3>
+            <p>Journey to the frozen north and meet polar bears and arctic foxes.</p>
+            <a href="/habitat/3" class="btn">Discover →</a>
+        </div>
+        <div class="habitat-card">
+            <img src="/images/mystic_marshlands.jpg" alt="Mystic Marshlands">
+            <h3>Mystic Marshlands</h3>
+            <p>Explore mysterious wetlands filled with unique amphibians and water birds.</p>
+            <a href="/habitat/4" class="btn">Discover →</a>
+        </div>
+        <div class="habitat-card">
+            <img src="/images/nightglow_forest.jpg" alt="Nightglow Forest">
+            <h3>Nightglow Forest</h3>
+            <p>Enter a magical forest that comes alive at night with glowing creatures.</p>
+            <a href="/habitat/5" class="btn">Discover →</a>
+        </div>
+    </div>
+</section>
+
+<script src="/js/ajax-search.js"></script>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+
+<div class="activity-hero">
+    <h1>Adventure Activities</h1>
+    <p>Ready for an adrenaline rush? Explore our thrilling wildlife experiences across all habitats!</p>
+</div>
+
+<div class="filter-section">
+    <button class="filter-btn active" data-filter="all">All Habitats</button>
+    <% const habitatNames = [...new Set(experiences.map(e => e.habitat_name))]; %>
+    <% habitatNames.forEach(name => { %>
+        <button class="filter-btn" data-filter="<%= name %>"><%= name %></button>
+    <% }); %>
+</div>
+
+<div class="activity-grid" id="activityGrid">
+    <% experiences.forEach(exp => { %>
+        <div class="activity-card" data-difficulty="<%= exp.habitat_name %>">
+            <img src="<%= exp.image_url %>" alt="<%= exp.name %>" onerror="this.src='https://placehold.co/400x220/2e7d32/white?text=<%= encodeURIComponent(exp.name) %>'">
+            <div class="activity-info">
+                <h2><%= exp.name %></h2>
+                <div class="activity-meta">
+                    <span class="badge-easy"><%= exp.habitat_name %></span>
+                    <span>🌿 Wildlife Experience</span>
+                </div>
+                <p><%= exp.description %></p>
+                <a href="/experience/<%= exp.id %>" class="book-btn">Find Out More →</a>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.activity-card').forEach(card => {
+                if (filter === 'all' || card.dataset.difficulty === filter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+<%- include('partials/footer') %>

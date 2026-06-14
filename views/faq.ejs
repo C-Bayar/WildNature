@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+
+<h1>Frequently Asked Questions</h1>
+
+<div class="faq-item">
+    <div class="faq-question">What are your opening times?</div>
+    <div class="faq-answer">We are open every day from 9am to 6pm. Last entry is at 5pm.</div>
+</div>
+
+<div class="faq-item">
+    <div class="faq-question"> How much do tickets cost?</div>
+    <div class="faq-answer">This is a promotional website only. </div>
+</div>
+
+<div class="faq-item">
+    <div class="faq-question">Can I bring my dog?</div>
+    <div class="faq-answer">Only assistance dogs are permitted inside the park.</div>
+</div>
+
+<div class="faq-item">
+    <div class="faq-question">Is there food available?</div>
+    <div class="faq-answer">Yes! We have The Canopy Cafe and Savannah Grill serving hot and cold food.</div>
+</div>
+
+<div class="faq-item">
+    <div class="faq-question"> Is the park wheelchair accessible?</div>
+    <div class="faq-answer">Yes, all habitats and facilities are fully wheelchair accessible.</div>
+</div>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            const a = q.nextElementSibling;
+            a.classList.toggle('active');
+        });
+    });
+</script>
+
+<%- include('partials/footer') %>

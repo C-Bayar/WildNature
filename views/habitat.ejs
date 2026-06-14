@@ -1,0 +1,34 @@
+<%- include('partials/header') %>
+
+<a href="/habitats" class="btn" style="display: inline-block; margin-bottom: 1rem;">← Back to Habitats</a>
+
+<h1><%= habitat.name %></h1>
+
+<img src="<%= habitat.image_url %>" alt="<%= habitat.name %>" class="habitat-banner" onerror="this.src='https://placehold.co/800x300/2e7d32/white?text=' + encodeURIComponent('<%= habitat.name %>')">
+
+<p class="habitat-description"><%= habitat.description %></p>
+
+<h2>Experiences & Exhibits</h2>
+
+<div class="experience-grid">
+    <% if (experiences && experiences.length > 0) { %>
+        <% experiences.forEach(exp => { %>
+            <div class="experience-card">
+                <% if (exp.image_url) { %>
+                    <div class="experience-card-image">
+                        <img src="<%= exp.image_url %>" alt="<%= exp.name %>">
+                    </div>
+                <% } %>
+                <div class="experience-card-content">
+                    <h3><%= exp.name %></h3>
+                    <p><%= exp.description %></p>
+                    <a href="/experience/<%= exp.id %>" class="btn-experience">Learn More →</a>
+                </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p>No experiences found for this habitat.</p>
+    <% } %>
+</div>
+
+<%- include('partials/footer') %>

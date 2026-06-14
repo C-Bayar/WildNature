@@ -1,0 +1,16 @@
+{
+  "name": "20024176",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "WildNature Park - Eco-Adventure Wildlife Park Website",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs",
+    "init-db": "node setup_database.cjs"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.22.2",
+    "sqlite3": "^5.1.7"
+  }
+}

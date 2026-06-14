@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+<a href="/habitat/<%= experience.habitat_id %>" class="btn" style="display: inline-block; margin-bottom: 1rem;">← Back to <%= experience.habitat_name %></a>
+
+<div class="experience-detail">
+    <% if (experience.image_url) { %>
+        <div class="experience-detail-image-wrapper">
+            <img src="<%= experience.image_url %>" alt="<%= experience.name %>" class="experience-detail-img">
+        </div>
+    <% } %>
+    
+    <h1><%= experience.name %></h1>
+    <p class="experience-description"><%= experience.description %></p>
+    
+    <div class="info-box">
+        <p><strong>Located in:</strong> <%= experience.habitat_name %></p>
+        <p><strong>Available:</strong> Daily, 9am - 6pm</p>
+        <p><strong>Rating:</strong> (4.5/5)</p>
+        <p><strong>Duration:</strong> 30-45 minutes</p>
+        <p><strong> Suitable for:</strong> All ages</p>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

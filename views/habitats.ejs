@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<h1>Our Habitats</h1>
+<p>Explore our five unique wildlife zones, each carefully designed to immerse you in different ecosystems.</p>
+
+<div class="habitat-grid">
+    <% habitats.forEach(habitat => { %>
+        <div class="habitat-card">
+            <img src="<%= habitat.image_url %>" alt="<%= habitat.name %>">
+            <h2><%= habitat.name %></h2>
+            <p><%= habitat.description %></p>
+            <a href="/habitat/<%= habitat.id %>" class="btn">View Experiences →</a>
+        </div>
+    <% }); %>
+</div>
+
+<%- include('partials/footer') %>
